@@ -1,6 +1,6 @@
-import express, {Request, Response} from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import express, {Request, Response} from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 //iniciamos una instancia del express

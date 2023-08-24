@@ -5,9 +5,10 @@ import cors from 'cors';
 dotenv.config();
 //iniciamos una instancia del express
 const app = express();
-const corsoptions = {
+const corsoptions ={
     origin : '*'
 }
+
 app.use(cors(corsoptions));
 app.use(express.json());
 app.use('/', (req: Request, res: Response)=>{res.send("HolaMundo");})

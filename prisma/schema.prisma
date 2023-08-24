@@ -1,0 +1,270 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CiudBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  spais                 Int
+  provincia             Int
+  codigo                Int
+  nombre                String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_CiudadABitacoraHDR")
+
+  @@id([pais, stamp_fecha, spais, provincia, codigo], map: "CiudBtPe_pk")
+  @@index([pais, stamp_fecha, spais, provincia, codigo], map: "fki_Ciudad_Hdr")
+  @@index([nombre, stamp_fecha], map: "si_CiudadNm")
+  @@index([stamp_fecha], map: "si_FechaCiudad")
+}
+
+model ClasBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  familia               Int
+  codigo                Int
+  nombre                String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_DeBitacoraHDR")
+
+  @@id([pais, stamp_fecha, familia, codigo], map: "clasbtpe_pk")
+  @@index([pais, stamp_fecha, familia, codigo], map: "fki_ClaseHdr")
+  @@index([familia, codigo, stamp_fecha], map: "si_Clase")
+  @@index([stamp_fecha], map: "si_FechaClase")
+}
+
+model ClieBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  rfc                   String   @db.VarChar(13)
+  razonsocial           String?  @db.VarChar(75)
+  diasalpago            Int?
+  diascredito           Int?
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_Cli_a_BitacoraHDR")
+
+  @@id([pais, stamp_fecha, rfc], map: "ClieBtPe_pk")
+  @@index([pais, stamp_fecha, rfc], map: "fki_clienteHdr")
+  @@index([razonsocial, stamp_fecha], map: "si_ClienteRZ")
+  @@index([stamp_fecha], map: "si_FechaCliente")
+  @@index([rfc, stamp_fecha], map: "si_RFC")
+}
+
+model GrupBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  codigo                Int
+  nombre                String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_GrupoABitacoraHDR")
+
+  @@id([pais, stamp_fecha, codigo], map: "GrupBtPe_pk")
+  @@index([pais, stamp_fecha, codigo], map: "fki_Grupo_Hdr")
+  @@index([stamp_fecha], map: "si_FechaGrupo")
+  @@index([nombre, stamp_fecha], map: "si_GrupoNm")
+}
+
+model HrBitPed {
+  pais                   Int
+  stamp_fecha            DateTime   @db.Date
+  tasa                   Float?
+  usuario                String?    @db.VarChar(8)
+  nacional_ndocumentos   Int?
+  nacional_kilos         Float?
+  nacional_unidadese     Int?
+  nacional_valor         Decimal?   @db.Money
+  exterior_ndocumentos   Int?
+  exterior_kilos         Float?
+  exterior_unidadese     Int?
+  exterior_valor         Decimal?   @db.Money
+  proformasn_ndocumentos Int?
+  proformasn_kilos       Float?
+  proformasn_unidadese   Int?
+  proformasn_valor       Decimal?   @db.Money
+  proformase_ndocumentos Int?
+  proformase_kilos       Float?
+  proformase_unidadese   Int?
+  proformase_valor       Decimal?   @db.Money
+  CiudBtPe               CiudBtPe[]
+  ClasBtPe               ClasBtPe[]
+  ClieBtPe               ClieBtPe[]
+  GrupBtPe               GrupBtPe[]
+  OfiBtPe                OfiBtPe[]
+  PaisBtPe               PaisBtPe[]
+  PrdBtPe                PrdBtPe[]
+  SucuBtPe               SucuBtPe[]
+  VenBtPe                VenBtPe[]
+  ZonaBtPe               ZonaBtPe[]
+
+  @@id([pais, stamp_fecha], map: "hrbitped_pk")
+  @@index([stamp_fecha], map: "si_Fecha")
+}
+
+model OfiBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  codigo                Int
+  nombres               String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_OficinaABitacoraHDR")
+
+  @@id([pais, stamp_fecha, codigo], map: "OfiBtPe_pk")
+  @@index([pais, stamp_fecha, codigo], map: "fki_Oficina_Hdr")
+  @@index([stamp_fecha], map: "si_FechaOficina")
+  @@index([nombres, stamp_fecha], map: "si_OficinaNm")
+}
+
+model PaisBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  codigo                Int
+  nombres               String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_PaisABitacoraHDR")
+
+  @@id([pais, stamp_fecha, codigo], map: "PaisBtPe_pk")
+  @@index([pais, stamp_fecha, codigo], map: "fki_Pais_Hdr")
+  @@index([stamp_fecha], map: "si_FechaPais")
+  @@index([nombres, stamp_fecha], map: "si_PaisNm")
+}
+
+model PrdBtPe {
+  pais                   Int
+  stamp_fecha            DateTime @db.Date
+  codigo                 Int
+  referencia             String?  @db.VarChar(20)
+  nacional_ndocumentos   Int?
+  nacional_kilos         Float?
+  nacional_unidadese     Int?
+  nacional_valor         Decimal? @db.Money
+  exterior_ndocumentos   Int?
+  exterior_kilos         Float?
+  exterior_unidadese     Int?
+  exterior_valor         Decimal? @db.Money
+  proformasn_ndocumentos Int?
+  proformasn_kilos       Float?
+  proformasn_unidadese   Int?
+  proformasn_valor       Decimal? @db.Money
+  proformase_ndocumentos Int?
+  proformase_kilos       Float?
+  proformase_unidadese   Int?
+  proformase_valor       Decimal? @db.Money
+  HrBitPed               HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_PrdABitacoraHDR")
+
+  @@id([pais, stamp_fecha, codigo], map: "ProductoBte_pk")
+  @@index([pais, stamp_fecha, codigo], map: "fki_ProductoHdr")
+  @@index([codigo, stamp_fecha], map: "si_Producto_Codigo")
+  @@index([referencia, stamp_fecha], map: "si_Producto_Referencia")
+}
+
+model SucuBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  clienteid             Int
+  codigo                Int
+  nombres               String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_SucursalABitacoraHDR")
+
+  @@id([pais, stamp_fecha, clienteid, codigo], map: "SucursalBtPe_pk")
+  @@index([pais, stamp_fecha, clienteid, codigo], map: "fki_Sucursal_Hdr")
+  @@index([clienteid, stamp_fecha], map: "si_ClienteDeSucursal")
+  @@index([stamp_fecha], map: "si_FechaSucursal")
+  @@index([nombres, stamp_fecha], map: "si_SucursalNm")
+}
+
+model VenBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  identificacion        String   @db.VarChar(13)
+  nombres               String?  @db.VarChar(50)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_VendedorABitacoraHDR")
+
+  @@id([pais, stamp_fecha, identificacion], map: "VendedorBtPe_pk")
+  @@index([pais, stamp_fecha, identificacion], map: "fki_Vendedor_Hdr")
+  @@index([stamp_fecha], map: "si_FechaVendedor")
+  @@index([nombres, stamp_fecha], map: "si_VendedorNm")
+}
+
+model ZonaBtPe {
+  pais                  Int
+  stamp_fecha           DateTime @db.Date
+  codigo                Int
+  nombres               String?  @db.VarChar(30)
+  pedidos_ndocumentos   Int?
+  pedidos_kilos         Float?
+  pedidos_unidadese     Int?
+  peidos_valor          Decimal? @db.Money
+  proformas_ndocumentos Int?
+  proformas_kilos       Float?
+  proformas_unidadese   Int?
+  proformas_valor       Decimal? @db.Money
+  HrBitPed              HrBitPed @relation(fields: [pais, stamp_fecha], references: [pais, stamp_fecha], onDelete: Cascade, map: "fk_ZonaABitacoraHDR")
+
+  @@id([pais, stamp_fecha, codigo], map: "ZonaBtPe_pk")
+  @@index([pais, stamp_fecha, codigo], map: "fki_Zona_Hdr")
+  @@index([stamp_fecha], map: "si_FechaZona")
+  @@index([nombres, stamp_fecha], map: "si_ZonaNm")
+}
